@@ -33,8 +33,8 @@ var tree = {
 };
 
 // 题目要求：在广度优先遍历的基础上，每打印一层，就换一行
-// 解法：加两个辅助变量last和nLast，last指向当前打印层的最后一个结点，nLast指向当前打印层的下一层最新加入的结点
-// 当当前node === last的时候，打印换行，同时令last = nLast
+// 解法：last表示最近一次push进队列的结点，right表示当前打印结点所在层的最右结点
+// 当当前node === right的时候，打印换行，同时令right = last
 function print(root) {
   if (Object.prototype.toString.call(root) !== '[object Object]') {
     console.log('please input a tree root');
@@ -44,8 +44,8 @@ function print(root) {
     console.log('empty tree');
     return;
   }
-  var last = root;
-  var nLast = null;
+  var right = root;
+  var last = null;
   var queue = [];
   queue.push(root);
   while (queue.length !== 0) {
@@ -53,16 +53,17 @@ function print(root) {
     process.stdout.write(node.key + ' ');
     if (node.left) {
       queue.push(node.left);
-      nLast = node.left;
+      last = node.left;
     }
     if (node.right) {
       queue.push(node.right);
-      nLast = node.right;
+      last = node.right;
     }
-    if (node === last) {
+    if (node === right) {
       process.stdout.write('\n');
-      last = nLast;
+      right = last;　 //　比如。当打印到第1行的最右结点时，此时last一定等于第2行的最右结点，所以令right = last
     }
   }
 }
+
 print(tree.root);
