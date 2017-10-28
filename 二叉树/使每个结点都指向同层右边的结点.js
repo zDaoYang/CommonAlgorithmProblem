@@ -67,15 +67,16 @@ print(tree1.root);
 */
 
 function addNext(root) {
-  var node, last = null; nlast = root, pre = null, curr = null;
+  var node, last = null; nlast = root, pre = null;
   var queue = [];
   queue.push(root);
   while (queue.length !== 0) {
     node = queue.shift();
-    pre = curr;
-    curr = node;
-    if (pre !== null) {
-      pre.next = curr;
+    if (pre === null) { // 如果pre === null 说明此时打印的是每一行的第一个元素，此时不用设置next指针，只要将pre设为当前节点就好
+      pre = node;
+    } else {
+      pre.next = node;
+      pre = node;
     }
     if (node.left) {
       queue.push(node.left);
@@ -86,8 +87,9 @@ function addNext(root) {
       last = node.right;
     }
     if (node === nlast) {
-      nlast = last;
-      curr = null;
+      nlast = last; 
+      node.next = null; // 换行的时候，将每一行的最后一个元素指向null，同时设置第二行的pre元素为null
+      pre = null;
     }
   }
 }

@@ -1,4 +1,8 @@
-// BST
+/*
+搜索二叉树(BST：Binary Search Tree)，又称二叉搜索树，二叉排序树
+每个头结点都比左子树上所有的结点值大，而且比右子树上所有结点的值小
+
+*/
 function isBinarySearchTree(root) {
   if (!root) {
     return false;
